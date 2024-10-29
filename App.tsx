@@ -2,13 +2,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { Text } from 'react-native'
+import { Text, View, StatusBar, Image, Pressable } from 'react-native'
 import HomeScreen from './screens/HomeScreen'
 import Products from './screens/Products'
 import Carts from './screens/Carts'
 import Login from './screens/auth/Login'
 import Register from './screens/auth/Register'
-
+import ProductHead from './features/ProductHead'
 const Tabs = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 export default function App() {
@@ -45,7 +45,13 @@ export default function App() {
 
 export const TabNavigator = () => {
   return (
-    <Tabs.Navigator>
+    <Tabs.Navigator
+      screenOptions={{
+        header: ({ navigation, route, options }) => {
+          return <ProductHead route={route} />
+        },
+      }}
+    >
       <Tabs.Screen
         name="home"
         component={HomeScreen}
