@@ -1,10 +1,17 @@
-import { View, Text, Button, StyleSheet, TextInput } from 'react-native'
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TextInput,
+  Pressable,
+} from 'react-native'
 import React, { useState } from 'react'
-import { SignupDetails } from '../../types/global'
+import { SignInDetails } from '../../types/global'
 import { SigninUser } from '../../features/AuthFunctions'
 
 const Login = ({ navigation }: any) => {
-  const [user, setUser] = useState<SignupDetails>({
+  const [user, setUser] = useState<SignInDetails>({
     email: '',
     password: '',
   })
@@ -15,7 +22,8 @@ const Login = ({ navigation }: any) => {
       console.log('User logged in successfully')
       navigation.navigate('home')
     }
-    SigninUser({ user, success })
+    success()
+    // SigninUser({ user, success })
   }
 
   return (
@@ -38,7 +46,25 @@ const Login = ({ navigation }: any) => {
           onChangeText={(text) => setUser({ ...user, password: text })}
         />
       </View>
+      <View>
+        <Text style={styles.forgotText}>Forgot password ?</Text>
+      </View>
+
       <Button title="Submit" onPress={handleSubmit} color="red" />
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: 5,
+          justifyContent: 'center',
+        }}
+      >
+        <Text>A new user</Text>
+
+        <Pressable onPress={() => navigation.navigate('register')}>
+          <Text style={{ color: 'blue' }}>Create new account</Text>
+        </Pressable>
+      </View>
     </View>
   )
 }
@@ -50,18 +76,20 @@ const styles = StyleSheet.create({
     gap: 10,
     justifyContent: 'center',
     width: '100%',
-    paddingHorizontal: 4,
+    paddingHorizontal: 10,
   },
   input: {
     borderWidth: 1,
+    borderRadius: 10,
     fontSize: 20,
-    padding: 5,
+    padding: 6,
   },
   inputContainer: {
     display: 'flex',
     flexDirection: 'column',
     gap: 4,
   },
+  forgotText: { textAlign: 'right', color: 'blue' },
 })
 
 export default Login

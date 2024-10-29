@@ -1,12 +1,13 @@
 import { app } from '../config'
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { SignupDetails } from '../types/global'
+import { SignInDetails, SignupDetails } from '../types/global'
 interface authProps {
-  user: SignupDetails
+  user: SignInDetails
   success: () => void
 }
 const auth = getAuth(app)
@@ -42,4 +43,5 @@ const SigninUser = ({ user, success }: authProps) => {
       console.log(errorCode, errorMessage)
     })
 }
+
 export { createUser, SigninUser }

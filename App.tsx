@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text } from 'react-native'
 import HomeScreen from './screens/HomeScreen'
 import Products from './screens/Products'
 import Carts from './screens/Carts'
@@ -22,7 +22,14 @@ export default function App() {
             title: 'Welcome back',
           }}
         />
-        <Stack.Screen name="register" component={Register} />
+        <Stack.Screen
+          name="register"
+          component={Register}
+          options={{
+            title: 'Welcome to Lasom',
+            headerBackVisible: false,
+          }}
+        />
 
         <Stack.Screen
           name="home"
@@ -44,6 +51,9 @@ export const TabNavigator = () => {
         component={HomeScreen}
         options={{
           title: 'Home',
+          tabBarLabel: ({ focused }) => (
+            <Text style={{ color: focused ? 'white' : 'skyblue' }}>Home</Text>
+          ),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" size={32} color="skyblue" />
           ),
@@ -56,6 +66,13 @@ export const TabNavigator = () => {
         name="products"
         component={Products}
         options={{
+          title: 'Products',
+          tabBarLabel: ({ focused }) => (
+            <Text style={{ color: focused ? 'white' : 'skyblue' }}>
+              Products
+            </Text>
+          ),
+
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="menu" size={32} color="skyblue" />
           ),
@@ -69,6 +86,9 @@ export const TabNavigator = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="cart" size={32} color="skyblue" />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text style={{ color: focused ? 'white' : 'skyblue' }}>Carts</Text>
           ),
           tabBarActiveTintColor: 'blue',
           tabBarActiveBackgroundColor: 'red',
