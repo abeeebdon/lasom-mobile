@@ -10,3 +10,11 @@ export interface SignupDetails {
   firstName: string
   lastName: string
 }
+export interface Product {
+  id: string | number
+  name: string
+  category: string
+  price: string
+  quantity: string
+  profileImageUrl: string
+}

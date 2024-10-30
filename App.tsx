@@ -9,37 +9,41 @@ import Carts from './screens/Carts'
 import Login from './screens/auth/Login'
 import Register from './screens/auth/Register'
 import ProductHead from './features/ProductHead'
+import ProductDetails from './screens/ProductDetails'
+import { AppProvider } from './hooks/AppContext'
 const Tabs = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="login">
-        <Stack.Screen
-          name="login"
-          component={Login}
-          options={{
-            title: 'Welcome back',
-          }}
-        />
-        <Stack.Screen
-          name="register"
-          component={Register}
-          options={{
-            title: 'Welcome to Lasom',
-            headerBackVisible: false,
-          }}
-        />
+    <AppProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="login">
+          <Stack.Screen
+            name="login"
+            component={Login}
+            options={{
+              title: 'Welcome back',
+            }}
+          />
+          <Stack.Screen
+            name="register"
+            component={Register}
+            options={{
+              title: 'Welcome to Lasom',
+              headerBackVisible: false,
+            }}
+          />
 
-        <Stack.Screen
-          name="home"
-          component={TabNavigator}
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen
+            name="home"
+            component={TabNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AppProvider>
   )
 }
 
@@ -70,7 +74,7 @@ export const TabNavigator = () => {
 
       <Tabs.Screen
         name="products"
-        component={Products}
+        component={ProductNavigation}
         options={{
           title: 'Products',
           tabBarLabel: ({ focused }) => (
@@ -102,5 +106,19 @@ export const TabNavigator = () => {
         }}
       />
     </Tabs.Navigator>
+  )
+}
+
+export const ProductNavigation = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="products"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="products" component={Products} />
+      <Stack.Screen name="productDetails" component={ProductDetails} />
+    </Stack.Navigator>
   )
 }
