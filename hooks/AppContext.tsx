@@ -13,6 +13,8 @@ import { app } from '../config'
 interface AppContextType {
   products: Product[] | undefined
   setProducts: (products: Product[] | undefined) => void
+  cart: Product[]
+  setCart: (products: Product[]) => void
   getData: () => Promise<Product[] | undefined>
 }
 
@@ -20,6 +22,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined)
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>()
+  const [cart, setCart] = useState<Product[]>([])
   const db = getFirestore(app)
 
   const getData = async () => {
@@ -35,9 +38,10 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     getData()
   }, [])
-
   return (
-    <AppContext.Provider value={{ products, setProducts, getData }}>
+    <AppContext.Provider
+      value={{ products, setProducts, getData, cart, setCart }}
+    >
       {children}
     </AppContext.Provider>
   )

@@ -1,11 +1,21 @@
-import { View, Text, Image, Pressable } from 'react-native'
-import React from 'react'
+import { View, Text, Image, Pressable, Alert } from 'react-native'
+import React, { useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import { AppContext } from '../hooks/AppContext'
 const SingleProduct = ({ item, navigation }: any) => {
   // const navigation = useNavigation()
-
+  const { cart, setCart } = useContext(AppContext)
   const handleItemPress = (item: any) => {
     navigation.navigate('productDetails', { item: item })
+  }
+  const handleCart = (id: string) => {
+    const cartContain = cart.find((car) => car.id === id)
+    if (cartContain) {
+      return Alert.alert('You have added this product already')
+    } else {
+      setCart([...cart, item])
+    }
+    console.log(cart)
   }
   return (
     <Pressable
@@ -68,6 +78,7 @@ const SingleProduct = ({ item, navigation }: any) => {
                 padding: 5,
                 borderRadius: 5,
               }}
+              onPress={() => handleCart(item.id)}
             >
               <Text>Add to cart</Text>
             </Pressable>

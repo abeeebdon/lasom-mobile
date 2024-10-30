@@ -10,7 +10,8 @@ import Login from './screens/auth/Login'
 import Register from './screens/auth/Register'
 import ProductHead from './features/ProductHead'
 import ProductDetails from './screens/ProductDetails'
-import { AppProvider } from './hooks/AppContext'
+import { AppContext, AppProvider } from './hooks/AppContext'
+import { useContext } from 'react'
 const Tabs = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 export default function App() {
@@ -48,6 +49,7 @@ export default function App() {
 }
 
 export const TabNavigator = () => {
+  const { cart } = useContext(AppContext)
   return (
     <Tabs.Navigator
       screenOptions={{
@@ -102,7 +104,7 @@ export const TabNavigator = () => {
           ),
           tabBarActiveTintColor: 'blue',
           tabBarActiveBackgroundColor: 'red',
-          tabBarBadge: 3,
+          tabBarBadge: cart?.length,
         }}
       />
     </Tabs.Navigator>
